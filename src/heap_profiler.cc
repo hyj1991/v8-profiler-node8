@@ -72,7 +72,7 @@ namespace nodex {
     Local<String> title = info[0]->ToString();
 #endif
 
-//ä¸´æ—¶è§£å†³æ–¹æ¡ˆï¼ŒNode 8 ä¸‹å¯ç”¨
+//ÁÙÊ±½â¾ö·½°¸£¬Node 8 ÏÂ¿ÉÓÃ
 #if (NODE_MODULE_VERSION > 0x0038)
     const HeapSnapshot* snapshot = v8::Isolate::GetCurrent()->GetHeapProfiler()->TakeHeapSnapshot();
 #elif (NODE_MODULE_VERSION > 0x002C)
