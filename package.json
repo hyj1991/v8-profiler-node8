@@ -1,28 +1,4 @@
 {
-  "_from": "v8-profiler-node8",
-  "_id": "v8-profiler-node8@5.7.6",
-  "_inBundle": false,
-  "_integrity": "sha1-XhvK4eid/CyfROMt3Xv3B4fg6l8=",
-  "_location": "/v8-profiler-node8",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "tag",
-    "registry": true,
-    "raw": "v8-profiler-node8",
-    "name": "v8-profiler-node8",
-    "escapedName": "v8-profiler-node8",
-    "rawSpec": "",
-    "saveSpec": null,
-    "fetchSpec": "latest"
-  },
-  "_requiredBy": [
-    "#USER",
-    "/"
-  ],
-  "_resolved": "http://registry.npm.taobao.org/v8-profiler-node8/download/v8-profiler-node8-5.7.6.tgz",
-  "_shasum": "5e1bcae1e89dfc2c9f44e32ddd7bf70787e0ea5f",
-  "_spec": "v8-profiler-node8",
-  "_where": "/Users/yijun/git/v8-profiler-node8",
   "author": {
     "name": "Danny Coates",
     "email": "dannycoates@gmail.com"
@@ -82,5 +58,5 @@
     "release": "node ./tools/release.js $@",
     "test": "mocha --debug"
   },
-  "version": "5.7.6"
+  "version": "5.7.7"
 }
