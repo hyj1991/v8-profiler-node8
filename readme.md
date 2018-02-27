@@ -1,20 +1,20 @@
-[![Build Status](https://secure.travis-ci.org/node-inspector/v8-profiler.png?branch=master)](http://travis-ci.org/node-inspector/v8-profiler)
-[![Build status](https://ci.appveyor.com/api/projects/status/hhgloy5smkl5i8fd/branch/master?svg=true)](https://ci.appveyor.com/project/3y3/v8-profiler/branch/master)
-[![npm version](https://badge.fury.io/js/v8-profiler-node8.svg)](http://badge.fury.io/js/v8-profiler-node8)
+[![Build Status](https://secure.travis-ci.org/node-inspector/v8-profiler-node8.png?branch=master)](http://travis-ci.org/node-inspector/v8-profiler-node8)
+[![Build status](https://ci.appveyor.com/api/projects/status/hhgloy5smkl5i8fd/branch/master?svg=true)](https://ci.appveyor.com/project/3y3/v8-profiler-node8/branch/master)
+[![npm version](https://badge.fury.io/js/v8-profiler-node8-node8.svg)](http://badge.fury.io/js/v8-profiler-node8-node8)
 
 # Description
-Based on v8-profiler@5.7.0, Solved the v8-profiler segment fault error in node 8.x
+Based on v8-profiler-node8@5.7.0, Solved the v8-profiler-node8 segment fault error in node 8.x
 
-v8-profiler provides [node](http://github.com/ry/node) bindings for the v8
+v8-profiler-node8 provides [node](http://github.com/ry/node) bindings for the v8
 profiler and integration with [node-inspector](http://github.com/dannycoates/node-inspector)
 
 ## Installation
 ```sh
-npm install v8-profiler
+npm install v8-profiler-node8
 ```
 ## Usage
 ```js
-var profiler = require('v8-profiler');
+var profiler = require('v8-profiler-node8');
 ```
 ## API
 `takeSnapshot([name])` - returns new HEAP Snapshot instance. `name` is optional argument, by default snapshot name will be constructed from his uid.
@@ -58,7 +58,7 @@ If callback will not be passed, `export` returns transform stream.
 
 ```js
 var fs = require('fs');
-var profiler = require('v8-profiler');
+var profiler = require('v8-profiler-node8');
 var snapshot1 = profiler.takeSnapshot();
 var snapshot2 = profiler.takeSnapshot();
 
@@ -87,7 +87,7 @@ snapshot2.export()
 
 ```js
 var fs = require('fs');
-var profiler = require('v8-profiler');
+var profiler = require('v8-profiler-node8');
 profiler.startProfiling('1', true);
 var profile1 = profiler.stopProfiling();
 profiler.startProfiling('2', true);
