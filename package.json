@@ -1,0 +1,86 @@
+{
+  "_from": "v8-profiler-node8",
+  "_id": "v8-profiler-node8@5.7.6",
+  "_inBundle": false,
+  "_integrity": "sha1-XhvK4eid/CyfROMt3Xv3B4fg6l8=",
+  "_location": "/v8-profiler-node8",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "v8-profiler-node8",
+    "name": "v8-profiler-node8",
+    "escapedName": "v8-profiler-node8",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "http://registry.npm.taobao.org/v8-profiler-node8/download/v8-profiler-node8-5.7.6.tgz",
+  "_shasum": "5e1bcae1e89dfc2c9f44e32ddd7bf70787e0ea5f",
+  "_spec": "v8-profiler-node8",
+  "_where": "/Users/yijun/git/v8-profiler-node8",
+  "author": {
+    "name": "Danny Coates",
+    "email": "dannycoates@gmail.com"
+  },
+  "binary": {
+    "module_name": "profiler",
+    "module_path": "./build/{module_name}/v{version}/{node_abi}-{platform}-{arch}/",
+    "remote_path": "./{module_name}/v5.7.0/",
+    "package_name": "{node_abi}-{platform}-{arch}.tar.gz",
+    "host": "https://node-inspector.s3.amazonaws.com/"
+  },
+  "bugs": {
+    "url": "https://github.com/node-inspector/v8-profiler/issues"
+  },
+  "bundleDependencies": false,
+  "contributors": [
+    {
+      "name": "Miroslav Bajtoš"
+    },
+    {
+      "name": "3y3",
+      "email": "3y3@bk.ru"
+    }
+  ],
+  "dependencies": {
+    "nan": "^2.5.1",
+    "node-pre-gyp": "^0.6.34"
+  },
+  "deprecated": false,
+  "description": "based on v8-profiler@5.7.0, solved the v8-profiler segment fault error in node 8.x",
+  "devDependencies": {
+    "aws-sdk": "^2.0.0",
+    "chai": "^1.9.1",
+    "co": "^4.6.0",
+    "mocha": "^1.20.1",
+    "rimraf": "^2.4.4"
+  },
+  "engines": {
+    "node": ">=0.10"
+  },
+  "homepage": "http://github.com/node-inspector/v8-profiler",
+  "keywords": [
+    "profiler",
+    "inspector"
+  ],
+  "license": "BSD-2-Clause",
+  "main": "v8-profiler",
+  "name": "v8-profiler-node8",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/node-inspector/v8-profiler.git"
+  },
+  "scripts": {
+    "install": "node-pre-gyp install --fallback-to-build",
+    "preinstall": "node -e 'process.exit(0)'",
+    "rebuild": "node-pre-gyp rebuild",
+    "release": "node ./tools/release.js $@",
+    "test": "mocha --debug"
+  },
+  "version": "5.7.6"
+}
