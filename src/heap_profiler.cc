@@ -13,7 +13,7 @@ namespace nodex {
   using v8::Object;
   using v8::SnapshotObjectId;
   using v8::String;
-  using v8::TryCatch;
+  using Nan::TryCatch;
   using v8::Value;
 
   HeapProfiler::HeapProfiler() {}
@@ -67,7 +67,6 @@ namespace nodex {
   }
 
   NAN_METHOD(HeapProfiler::TakeSnapshot) {
-    ActivityControlAdapter* control = new ActivityControlAdapter(info[1]);
 #if (NODE_MODULE_VERSION < 0x000F)
     Local<String> title = info[0]->ToString();
 #endif
@@ -75,10 +74,13 @@ namespace nodex {
 #if (NODE_MODULE_VERSION > 0x0038)
     const HeapSnapshot* snapshot = v8::Isolate::GetCurrent()->GetHeapProfiler()->TakeHeapSnapshot();
 #elif (NODE_MODULE_VERSION > 0x002C)
+    ActivityControlAdapter* control = new ActivityControlAdapter(info[1]);
     const HeapSnapshot* snapshot = v8::Isolate::GetCurrent()->GetHeapProfiler()->TakeHeapSnapshot(control);
 #elif (NODE_MODULE_VERSION > 0x000B)
+    ActivityControlAdapter* control = new ActivityControlAdapter(info[1]);
     const HeapSnapshot* snapshot = v8::Isolate::GetCurrent()->GetHeapProfiler()->TakeHeapSnapshot(title, control);
 #else
+    ActivityControlAdapter* control = new ActivityControlAdapter(info[1]);
     const HeapSnapshot* snapshot = v8::HeapProfiler::TakeSnapshot(title, HeapSnapshot::kFull, control);
 #endif
 

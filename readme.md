@@ -3,7 +3,9 @@
 [![npm version](https://badge.fury.io/js/v8-profiler-node8-node8.svg)](http://badge.fury.io/js/v8-profiler-node8-node8)
 
 # Description
-Based on v8-profiler-node8@5.7.0, Solved the v8-profiler-node8 segment fault error in node 8.x
+Based on v8-profiler-node8@5.7.0, Solved the v8-profiler segment fault error in node 8.x
+
+Now also Supported node 10.x
 
 v8-profiler-node8 provides [node](http://github.com/ry/node) bindings for the v8
 profiler and integration with [node-inspector](http://github.com/dannycoates/node-inspector)

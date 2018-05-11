@@ -11,7 +11,7 @@
     "host": "https://node-inspector.s3.amazonaws.com/"
   },
   "bugs": {
-    "url": "https://github.com/node-inspector/v8-profiler/issues"
+    "url": "https://github.com/hyj1991/v8-profiler-node8/issues"
   },
   "bundleDependencies": false,
   "contributors": [
@@ -58,5 +58,5 @@
     "release": "node ./tools/release.js $@",
     "test": "mocha --debug"
   },
-  "version": "5.7.7"
+  "version": "5.7.8"
 }
