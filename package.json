@@ -58,5 +58,5 @@
     "release": "node ./tools/release.js $@",
     "test": "mocha --debug"
   },
-  "version": "5.7.8"
+  "version": "6.0.0"
 }
