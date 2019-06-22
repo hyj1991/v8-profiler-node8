@@ -32,7 +32,7 @@ namespace nodex {
         };
 
         TryCatch try_catch;
-        abort = reportProgress->Call(Nan::GetCurrentContext()->Global(), 2, argv);
+        abort = (Nan::Call(reportProgress, Nan::GetCurrentContext()->Global(), 2, argv)).ToLocalChecked();
 
         if (try_catch.HasCaught()) {
           Nan::ThrowError(try_catch.Exception());
@@ -59,15 +59,15 @@ namespace nodex {
     Nan::SetMethod(heapProfiler, "getHeapStats", HeapProfiler::GetHeapStats);
     Nan::SetMethod(heapProfiler, "getObjectByHeapObjectId", HeapProfiler::GetObjectByHeapObjectId);
     Nan::SetMethod(heapProfiler, "getHeapObjectId", HeapProfiler::GetHeapObjectId);
-    heapProfiler->Set(Nan::New<String>("snapshots").ToLocalChecked(), snapshots);
+    Nan::Set(heapProfiler, Nan::New<String>("snapshots").ToLocalChecked(), snapshots);
 
     Snapshot::snapshots.Reset(snapshots);
-    target->Set(Nan::New<String>("heap").ToLocalChecked(), heapProfiler);
+    Nan::Set(target, Nan::New<String>("heap").ToLocalChecked(), heapProfiler);
   }
 
   NAN_METHOD(HeapProfiler::TakeSnapshot) {
 #if (NODE_MODULE_VERSION < 0x000F)
-    Local<String> title = info[0]->ToString();
+    Local<String> title = Nan::To<String>(info[0]).ToLocalChecked();
 #endif
 
 #if (NODE_MODULE_VERSION > 0x0038)
@@ -110,7 +110,7 @@ namespace nodex {
   }
 
   NAN_METHOD(HeapProfiler::GetObjectByHeapObjectId) {
-    SnapshotObjectId id = info[0]->Uint32Value();
+    SnapshotObjectId id = Nan::To<uint32_t>(info[0]).ToChecked();
     Local<Value> object;
 #if (NODE_MODULE_VERSION > 0x000B)
     object = v8::Isolate::GetCurrent()->GetHeapProfiler()->FindObjectById(id);
