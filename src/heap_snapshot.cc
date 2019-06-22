@@ -3,8 +3,7 @@
 #include "heap_graph_node.h"
 
 namespace nodex {
-  using v8::Array;
-  using v8::Handle;
+  using v8::Array;  
   using v8::HeapSnapshot;
   using v8::HeapGraphNode;
   using v8::HeapGraphEdge;
