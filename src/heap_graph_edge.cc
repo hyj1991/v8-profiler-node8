@@ -2,7 +2,6 @@
 #include "heap_graph_edge.h"
 
 namespace nodex {
-  using v8::Handle;
   using v8::HeapGraphEdge;
   using v8::Integer;
   using v8::Local;
@@ -49,10 +48,10 @@ namespace nodex {
     Local<Value> from = GraphNode::New(node->GetFromNode());
     Local<Value> to = GraphNode::New(node->GetToNode());
 
-    graph_edge->Set(Nan::New<String>("type").ToLocalChecked(), type);
-    graph_edge->Set(Nan::New<String>("name").ToLocalChecked(), name);
-    graph_edge->Set(Nan::New<String>("from").ToLocalChecked(), from);
-    graph_edge->Set(Nan::New<String>("to").ToLocalChecked(), to);
+    Nan::Set(graph_edge, Nan::New<String>("type").ToLocalChecked(), type);
+    Nan::Set(graph_edge, Nan::New<String>("name").ToLocalChecked(), name);
+    Nan::Set(graph_edge, Nan::New<String>("from").ToLocalChecked(), from);
+    Nan::Set(graph_edge, Nan::New<String>("to").ToLocalChecked(), to);
 
     return scope.Escape(graph_edge);
   }

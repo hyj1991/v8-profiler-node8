@@ -30,7 +30,7 @@
   "deprecated": false,
   "description": "based on v8-profiler@5.7.0, solved the v8-profiler segment fault error in node 8.x",
   "devDependencies": {
-    "aws-sdk": "^2.0.0",
+    "aws-sdk": "^2.485.0",
     "chai": "^1.9.1",
     "co": "^4.6.0",
     "mocha": "^5.2.0",
@@ -58,5 +58,5 @@
     "release": "node ./tools/release.js $@",
     "test": "mocha --debug"
   },
-  "version": "6.0.1"
+  "version": "7.0.1"
 }
