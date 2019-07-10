@@ -1,5 +1,6 @@
 [![npm version](https://img.shields.io/npm/v/v8-profiler-node8/latest.svg)](https://img.shields.io/npm/v/v8-profiler-node8/latest.svg)
-[![linux build](https://travis-ci.org/hyj1991/v8-profiler-node8.svg?branch=master)](https://travis-ci.org/hyj1991/v8-profiler-node8.svg?branch=master)
+[![linux build status](https://travis-ci.org/hyj1991/v8-profiler-node8.svg?branch=master)](https://travis-ci.org/hyj1991/v8-profiler-node8.svg?branch=master)
+[![windows build status](https://ci.appveyor.com/api/projects/status/0l9osc0hq6r5p0bn?svg=true)](https://ci.appveyor.com/api/projects/status/0l9osc0hq6r5p0bn?svg=true)
 [![downloads info](https://img.shields.io/npm/dm/v8-profiler-node8.svg)](https://img.shields.io/npm/dm/v8-profiler-node8.svg)
 [![license](https://img.shields.io/npm/l/v8-profiler-node8.svg)](LICENSE)
 
