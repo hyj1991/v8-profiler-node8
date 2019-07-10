@@ -1,11 +1,22 @@
-[![Build Status](https://secure.travis-ci.org/node-inspector/v8-profiler-node8.png?branch=master)](http://travis-ci.org/node-inspector/v8-profiler-node8)
-[![Build status](https://ci.appveyor.com/api/projects/status/hhgloy5smkl5i8fd/branch/master?svg=true)](https://ci.appveyor.com/project/3y3/v8-profiler-node8/branch/master)
-[![npm version](https://badge.fury.io/js/v8-profiler-node8-node8.svg)](http://badge.fury.io/js/v8-profiler-node8-node8)
+[![npm version](https://img.shields.io/npm/v/v8-profiler-node8/latest.svg)](https://img.shields.io/npm/v/v8-profiler-node8/latest.svg)
+[![linux build](https://travis-ci.org/hyj1991/v8-profiler-node8.svg?branch=master)](https://travis-ci.org/hyj1991/v8-profiler-node8.svg?branch=master)
+[![downloads info](https://img.shields.io/npm/dm/v8-profiler-node8.svg)](https://img.shields.io/npm/dm/v8-profiler-node8.svg)
+[![license](https://img.shields.io/npm/l/v8-profiler-node8.svg)](LICENSE)
 
 # Description
 Based on v8-profiler-node8@5.7.0, Solved the v8-profiler segment fault error in node-v8.x.
 
-Now also Supported node-v10.x & node-v12.x.
+# Compatibility
+
+* node-v4.x
+* node-v5.x
+* node-v6.x
+* node-v7.x
+* node-v8.x
+* node-v9.x
+* node-v10.x
+* node-v11.x
+* node-v12.x
 
 v8-profiler-node8 provides [node](http://github.com/ry/node) bindings for the v8
 profiler and integration with [node-inspector](http://github.com/dannycoates/node-inspector)
