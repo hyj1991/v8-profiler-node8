@@ -21,20 +21,23 @@
     {
       "name": "3y3",
       "email": "3y3@bk.ru"
+    },
+    {
+      "name": "hyj1991",
+      "email": "yeekwanvong@gmail.com"
     }
   ],
   "dependencies": {
     "nan": "^2.14.0",
-    "node-pre-gyp": "^0.11.0"
+    "node-pre-gyp": "^0.13.0"
   },
   "deprecated": false,
   "description": "based on v8-profiler@5.7.0, solved the v8-profiler segment fault error in node 8.x",
   "devDependencies": {
-    "aws-sdk": "^2.485.0",
-    "chai": "^1.9.1",
+    "chai": "^4.2.0",
     "co": "^4.6.0",
     "mocha": "^5.2.0",
-    "rimraf": "^2.4.4"
+    "rimraf": "^2.6.3"
   },
   "engines": {
     "node": ">=0.10"

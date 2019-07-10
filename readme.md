@@ -1,26 +1,31 @@
-[![npm version](https://img.shields.io/npm/v/v8-profiler-node8/latest.svg)](https://img.shields.io/npm/v/v8-profiler-node8/latest.svg)
-[![linux build status](https://travis-ci.org/hyj1991/v8-profiler-node8.svg?branch=master)](https://travis-ci.org/hyj1991/v8-profiler-node8.svg?branch=master)
-[![windows build status](https://ci.appveyor.com/api/projects/status/0l9osc0hq6r5p0bn?svg=true)](https://ci.appveyor.com/api/projects/status/0l9osc0hq6r5p0bn?svg=true)
-[![downloads info](https://img.shields.io/npm/dm/v8-profiler-node8.svg)](https://img.shields.io/npm/dm/v8-profiler-node8.svg)
+[![npm version](https://img.shields.io/npm/v/v8-profiler-node8/latest.svg)](https://www.npmjs.com/package/v8-profiler-node8)
+[![linux build status](https://travis-ci.org/hyj1991/v8-profiler-node8.svg?branch=master)](https://travis-ci.org/hyj1991/v8-profiler-node8)
+[![windows build status](https://ci.appveyor.com/api/projects/status/0l9osc0hq6r5p0bn?svg=true)](https://ci.appveyor.com/project/hyj1991/v8-profiler-node8)
+[![downloads info](https://img.shields.io/npm/dm/v8-profiler-node8.svg)](https://www.npmjs.com/package/v8-profiler-node8)
 [![license](https://img.shields.io/npm/l/v8-profiler-node8.svg)](LICENSE)
 
 # Description
 Based on v8-profiler-node8@5.7.0, Solved the v8-profiler segment fault error in node-v8.x.
 
+v8-profiler-node8 provides [node](http://github.com/nodejs/node) bindings for the v8
+profiler and integration with [node-inspector](http://github.com/node-inspector)
+
 # Compatibility
+* **Platform**
+  * mac
+  * linux
+  * windows
 
-* node-v4.x
-* node-v5.x
-* node-v6.x
-* node-v7.x
-* node-v8.x
-* node-v9.x
-* node-v10.x
-* node-v11.x
-* node-v12.x
-
-v8-profiler-node8 provides [node](http://github.com/ry/node) bindings for the v8
-profiler and integration with [node-inspector](http://github.com/dannycoates/node-inspector)
+* **Node version**
+  * v4.x
+  * v5.x
+  * v6.x
+  * v7.x
+  * v8.x
+  * v9.x
+  * v10.x
+  * v11.x
+  * v12.x
 
 ## Installation
 ```sh
