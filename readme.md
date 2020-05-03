@@ -5,7 +5,7 @@
 [![license](https://img.shields.io/npm/l/v8-profiler-node8.svg)](LICENSE)
 
 # Description
-Based on v8-profiler-node8@5.7.0, Solved the v8-profiler segment fault error in node-v8.x.
+Based on v8-profiler-node8@5.7.0, Solved the v8-profiler segment fault error in node-v8.x+.
 
 v8-profiler-node8 provides [node](http://github.com/nodejs/node) bindings for the v8
 profiler and integration with [node-inspector](http://github.com/node-inspector)
@@ -26,6 +26,8 @@ profiler and integration with [node-inspector](http://github.com/node-inspector)
   * v10.x
   * v11.x
   * v12.x
+  * v13.x
+  * v14.x
 
 ## Installation
 ```sh
