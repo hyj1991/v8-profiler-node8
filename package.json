@@ -28,11 +28,11 @@
     }
   ],
   "dependencies": {
-    "nan": "^2.14.0",
+    "nan": "^2.14.1",
     "node-pre-gyp": "^0.13.0"
   },
   "deprecated": false,
-  "description": "based on v8-profiler@5.7.0, solved the v8-profiler segment fault error in node 8.x",
+  "description": "based on v8-profiler@5.7.0, solved the v8-profiler segment fault error in node 8.x+",
   "devDependencies": {
     "chai": "^4.2.0",
     "co": "^4.6.0",
@@ -42,7 +42,7 @@
   "engines": {
     "node": ">=0.10"
   },
-  "homepage": "http://github.com/node-inspector/v8-profiler",
+  "homepage": "http://github.com/hyj1991/v8-profiler-node8",
   "keywords": [
     "profiler",
     "inspector"
@@ -52,7 +52,7 @@
   "name": "v8-profiler-node8",
   "repository": {
     "type": "git",
-    "url": "git://github.com/node-inspector/v8-profiler.git"
+    "url": "git://github.com/hyj1991/v8-profiler-node8.git"
   },
   "scripts": {
     "install": "node-pre-gyp install --fallback-to-build",
@@ -61,5 +61,5 @@
     "release": "node ./tools/release.js $@",
     "test": "mocha"
   },
-  "version": "6.1.1"
+  "version": "6.2.0"
 }
