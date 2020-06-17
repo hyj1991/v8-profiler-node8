@@ -1,11 +1,7 @@
-var pack = require('./package.json');
-var binding = require('./' + [
-  'build',
-  'profiler',
-  'v' + pack.version,
-  ['node', 'v' + process.versions.modules, process.platform, process.arch].join('-'),
-  'profiler.node'
-].join('/'));
+var path = require('path');
+var binary = require('node-pre-gyp');
+var bindingPath = binary.find(path.resolve(path.join(__dirname, './package.json')));
+var binding = require(bindingPath);
 
 var Stream = require('stream').Stream,
     inherits = require('util').inherits;
