@@ -250,6 +250,10 @@ var profiler = {
     Object.keys(binding.cpu.profiles).forEach(function(key) {
       binding.cpu.profiles[key].delete();
     });
+  },
+
+  collectSample: function() {
+    binding.cpu.collectSample();
   }
 };
 

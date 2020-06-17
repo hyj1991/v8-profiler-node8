@@ -26,7 +26,7 @@ describe('binding', function() {
     describe('Profiler', function() {
 
       it('has expected structure', function() {
-        var properties = ['startProfiling', 'stopProfiling', 'profiles'];
+        var properties = ['startProfiling', 'stopProfiling', 'profiles', 'collectSample'];
 
         properties.forEach(function(prop) {
           expect(cpu).to.have.property(prop);

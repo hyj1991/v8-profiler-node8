@@ -56,6 +56,8 @@ profiler.deleteAllSnapshots();
 
 `deleteAllProfiles()` - works as described in name.
 
+`collectSample()` - causes all active profiles to synchronously record the current callstack. Does not add a new top level sample, only adds more detail to the call graph.
+
 ```js
 profiler.startProfiling('', true);
 setTimeout(function() {
