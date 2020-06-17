@@ -5,10 +5,10 @@
   },
   "binary": {
     "module_name": "profiler",
-    "module_path": "./build/{module_name}/v{version}/{node_abi}-{platform}-{arch}/",
-    "remote_path": "./{module_name}/v5.7.0/",
-    "package_name": "{node_abi}-{platform}-{arch}.tar.gz",
-    "host": "https://node-inspector.s3.amazonaws.com/"
+    "module_path": "./build/binding/{configuration}/{node_abi}-{platform}-{arch}/",
+    "remote_path": "./v{version}/",
+    "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
+    "host": "https://github.com/hyj1991/v8-profiler-node8/releases/download"
   },
   "bugs": {
     "url": "https://github.com/hyj1991/v8-profiler-node8/issues"
@@ -29,7 +29,8 @@
   ],
   "dependencies": {
     "nan": "^2.14.1",
-    "node-pre-gyp": "^0.13.0"
+    "node-gyp": "^3.8.0",
+    "node-pre-gyp": "^0.15.0"
   },
   "deprecated": false,
   "description": "based on v8-profiler@5.7.0, solved the v8-profiler segment fault error in node 8.x+",
@@ -57,8 +58,14 @@
   "scripts": {
     "install": "node-pre-gyp install --fallback-to-build",
     "preinstall": "node -e 'process.exit(0)'",
-    "rebuild": "node-pre-gyp rebuild",
-    "release": "node ./tools/release.js $@",
+    "package": "node scripts/build.js",
+    "pack-common": "node scripts/common.js",
+    "pack-6u": "node scripts/6u.js",
+    "pack-7u": "node scripts/7u.js",
+    "copy": "node scripts/copy.js",
+    "build": "node-pre-gyp rebuild",
+    "pack": "node-pre-gyp package && node-pre-gyp testpackage",
+    "dep": "npm run build && npm run test",
     "test": "mocha"
   },
   "version": "6.2.0"

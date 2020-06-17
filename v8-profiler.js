@@ -1,11 +1,7 @@
-var pack = require('./package.json');
-var binding = require('./' + [
-  'build',
-  'profiler',
-  'v' + pack.version,
-  ['node', 'v' + process.versions.modules, process.platform, process.arch].join('-'),
-  'profiler.node'
-].join('/'));
+var path = require('path');
+var binary = require('node-pre-gyp');
+var bindingPath = binary.find(path.resolve(path.join(__dirname, './package.json')));
+var binding = require(bindingPath);
 
 var Stream = require('stream').Stream,
     inherits = require('util').inherits;
@@ -253,6 +249,8 @@ var profiler = {
   },
 
   collectSample: function() {
+    if (process.versions.modules < 48)
+      throw new Error('collectSample() needs node version >= node-v6.0.0!');
     binding.cpu.collectSample();
   }
 };

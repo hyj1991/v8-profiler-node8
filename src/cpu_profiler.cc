@@ -80,7 +80,7 @@ namespace nodex {
   NAN_METHOD(CpuProfiler::CollectSample) {
 #if (NODE_MODULE_VERSION > 0x003B)
     v8::CpuProfiler::CollectSample(v8::Isolate::GetCurrent());
-#else
+#elif (NODE_MODULE_VERSION >= 0x0030)
     v8::Isolate::GetCurrent()->GetCpuProfiler()->CollectSample();
 #endif
   }
