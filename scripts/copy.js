@@ -2,26 +2,22 @@
 
 const path = require('path');
 const fs = require('fs');
-const { promisify } = require('util');
-const exists = promisify(fs.exists);
-const mkdir = promisify(fs.mkdir);
-const copyFile = promisify(fs.copyFile);
 const versioning = require('node-pre-gyp/lib/util/versioning.js');
-const { staged_tarball: packagePath } = versioning.evaluate(require('../package.json'));
+const packagePath = versioning.evaluate(require('../package.json')).staged_tarball;
 
-async function copy() {
+function copy() {
   const release = path.join(__dirname, '../release');
-  if (!await exists(release)) {
-    await mkdir(release);
+  if (!fs.existsSync(release)) {
+    fs.mkdirSync(release);
   }
 
-  if (!await exists(packagePath)) {
+  if (!fs.existsSync(packagePath)) {
     return;
   }
 
   const filename = path.basename(packagePath);
   const target = path.join(release, filename);
-  await copyFile(packagePath, target);
+  fs.createReadStream(packagePath).pipe(fs.createWriteStream(target));
 }
 
 copy();

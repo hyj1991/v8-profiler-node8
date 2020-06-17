@@ -249,6 +249,8 @@ var profiler = {
   },
 
   collectSample: function() {
+    if (process.versions.modules < 48)
+      throw new Error('collectSample() needs node version >= node-v6.0.0!');
     binding.cpu.collectSample();
   }
 };

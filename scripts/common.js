@@ -13,7 +13,7 @@ const nodeVersions = [
   'node-v14.4.0'
 ];
 
-if (os.platform() === 'linux') {
+if (os.platform() === 'win32') {
   nodeVersions.push(
     'node-v4.9.1',
     'node-v5.12.0',

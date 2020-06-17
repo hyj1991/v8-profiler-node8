@@ -4,11 +4,6 @@ const os = require('os');
 const fs = require('fs');
 const cp = require('child_process');
 const path = require('path');
-const { promisify } = require('util');
-const readdir = promisify(fs.readdir);
-const exists = promisify(fs.exists);
-const unlink = promisify(fs.unlink);
-const mkdir = promisify(fs.mkdir);
 
 const isWindows = os.platform() === 'win32';
 
@@ -29,23 +24,23 @@ function execCmd(cmd) {
   });
 }
 
-async function cleanReleaseDir() {
+function cleanReleaseDir() {
   const release = path.join(__dirname, '../release');
-  if (!await exists(release)) {
-    await mkdir(release);
+  if (!fs.existsSync(release)) {
+    fs.mkdirSync(release);
   }
-  const files = await readdir(release);
+  const files = fs.readdirSync(release);
   for (const file of files) {
     const filePath = path.join(release, file);
-    if (!await exists(filePath)) {
+    if (!fs.existsSync(filePath)) {
       continue;
     }
-    await unlink(filePath);
+    fs.unlinkSync(filePath);
   }
 }
 
-module.exports = async versions => {
-  await cleanReleaseDir();
+module.exports = versions => {
+  cleanReleaseDir();
 
   for (const version of versions) {
     debug(`>>>>>>>> start build with ${version}`);
@@ -53,13 +48,13 @@ module.exports = async versions => {
     let change = `source ~/.bashrc && tnvm use ${version}`;
     const nvmNodeVersion = /^node-v(.*)$/.exec(version)[1];
     if (isWindows) {
-      npmBin =  path.join(os.tmpdir(), '../../', `Roaming\\nvm\\v${nvmNodeVersion}\\npm.cmd`);
+      npmBin = path.join(os.tmpdir(), '../../', `Roaming\\nvm\\v${nvmNodeVersion}\\npm.cmd`);
       change = `nvm use ${nvmNodeVersion}`;
     }
 
     const install = 'npm install';
     const build = `${npmBin} run dep`;
-    const pack = 'npx node-pre-gyp package && npx node-pre-gyp testpackage';
+    const pack = 'npm run pack';
     const copy = `${npmBin} run copy`;
     execCmd(`${change} && ${build} && ${install} && ${pack} && ${copy}`);
     debug(`<<<<<<<< build with ${version} done.`);
