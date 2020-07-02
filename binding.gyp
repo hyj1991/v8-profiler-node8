@@ -7,6 +7,7 @@
         'src/profiler.cc',
         'src/cpu_profiler.cc',
         'src/cpu_profile.cc',
+        'src/profiler_data.cc',
         'src/cpu_profile_node.cc',
         'src/heap_profiler.cc',
         'src/heap_snapshot.cc',
