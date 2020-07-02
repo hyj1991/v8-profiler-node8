@@ -7,7 +7,9 @@ namespace nodex {
 
   ProfilerData::ProfilerData(v8::Local<Context> newContext, Isolate* isolate) {
     context = newContext;
+#if (NODE_MODULE_VERSION > 0x3B)
     node::AddEnvironmentCleanupHook(isolate, DeleteInstance, this);
+#endif
   }
 
   void ProfilerData::DeleteInstance(void* data) {

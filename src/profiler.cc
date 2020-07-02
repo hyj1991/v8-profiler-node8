@@ -11,6 +11,7 @@ namespace nodex {
     CpuProfiler::Initialize(target, context, data);
   }
 
+#if (NODE_MODULE_VERSION > 0x3B)
   NODE_MODULE_INIT(/* exports, module, context */) {
     v8::Isolate* isolate = context->GetIsolate();
 
@@ -18,4 +19,16 @@ namespace nodex {
 
     InitializeProfiler(exports, context, data);
   }
+#else
+  void Initialize(v8::Local<v8::Object> exports) {
+    v8::Isolate* isolate = exports->GetIsolate();
+    v8::Local<v8::Context> context = isolate->GetCurrentContext();
+
+    ProfilerData* data = new ProfilerData(context, isolate);
+
+    InitializeProfiler(exports, context, data);
+  }
+
+  NODE_MODULE(profiler, Initialize);
+#endif
 }
