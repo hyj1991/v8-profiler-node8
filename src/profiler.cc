@@ -12,13 +12,13 @@ namespace nodex {
   }
 
 #if (NODE_MODULE_VERSION > 0x3B)
-  extern "C" NODE_MODULE_EXPORT
-  void NODE_MODULE_INITIALIZER(v8::Local<v8::Object> exports,
+  extern "C" NODE_MODULE_EXPORT void
+  NODE_MODULE_INITIALIZER(v8::Local<v8::Object> exports,
                           v8::Local<v8::Value> module,
                           v8::Local<v8::Context> context) {
     v8::Isolate* isolate = context->GetIsolate();
 
-    ProfilerData* data = new ProfilerData(context, isolate);
+    ProfilerData* data = new ProfilerData(isolate);
 
     InitializeProfiler(exports, context, data);
   }
@@ -27,7 +27,7 @@ namespace nodex {
     v8::Isolate* isolate = exports->GetIsolate();
     v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
-    ProfilerData* data = new ProfilerData(context, isolate);
+    ProfilerData* data = new ProfilerData(isolate);
 
     InitializeProfiler(exports, context, data);
   }

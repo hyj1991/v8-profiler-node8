@@ -5,8 +5,7 @@ namespace nodex {
   using v8::Context;
   using v8::Isolate;
 
-  ProfilerData::ProfilerData(v8::Local<Context> newContext, Isolate* isolate) {
-    context = newContext;
+  ProfilerData::ProfilerData(Isolate* isolate) {
 #if (NODE_MODULE_VERSION > 0x3B)
     node::AddEnvironmentCleanupHook(isolate, DeleteInstance, this);
 #endif

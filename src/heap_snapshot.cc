@@ -120,7 +120,7 @@ namespace nodex {
     snapshot = Nan::New(data->snapshot_template_)
       ->NewInstance(Nan::GetCurrentContext()).ToLocalChecked();
 #else
-    snapshot = Nan::New(snapshot_template_)->NewInstance();
+    snapshot = Nan::New(data->snapshot_template_)->NewInstance();
 #endif
     Nan::SetInternalFieldPointer(snapshot, 0, const_cast<HeapSnapshot*>(node));
 
