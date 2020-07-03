@@ -22,9 +22,9 @@ namespace nodex {
 
     Local<External> externalData = Nan::New<External>(data);
 
-    v8::CpuProfiler* profiler = v8::CpuProfiler::New(context->GetIsolate());
-
-    data->profiler = profiler;
+#if (NODE_MODULE_VERSION > 0x0039)
+    data->profiler = v8::CpuProfiler::New(context->GetIsolate());
+#endif
 
     Nan::SetMethod(cpuProfiler, "startProfiling", CpuProfiler::StartProfiling, externalData);
     Nan::SetMethod(cpuProfiler, "stopProfiling", CpuProfiler::StopProfiling, externalData);
@@ -39,13 +39,15 @@ namespace nodex {
   NAN_METHOD(CpuProfiler::StartProfiling) {
     Local<String> title = Nan::To<String>(info[0]).ToLocalChecked();
 
+#if (NODE_MODULE_VERSION > 0x0039)
     ProfilerData* data =
       reinterpret_cast<ProfilerData*>(info.Data().As<External>()->Value());
-    v8::CpuProfiler* profiler = data->profiler;
 
-#if (NODE_MODULE_VERSION > 0x000B)
     bool recsamples = Nan::To<Boolean>(info[1]).ToLocalChecked()->Value();
-    profiler->StartProfiling(title, recsamples);
+    data->profiler->StartProfiling(title, recsamples);
+#elif (NODE_MODULE_VERSION > 0x000B)
+    bool recsamples = Nan::To<Boolean>(info[1]).ToLocalChecked()->Value();
+    v8::Isolate::GetCurrent()->GetCpuProfiler()->StartProfiling(title, recsamples);
 #else
     v8::CpuProfiler::StartProfiling(title);
 #endif
@@ -56,7 +58,6 @@ namespace nodex {
 
     ProfilerData* data =
       reinterpret_cast<ProfilerData*>(info.Data().As<External>()->Value());
-    v8::CpuProfiler* profiler = data->profiler;
 
     Local<String> title = Nan::EmptyString();
     if (info.Length()) {
@@ -67,8 +68,10 @@ namespace nodex {
       }
     }
 
-#if (NODE_MODULE_VERSION > 0x000B)
-    profile = profiler->StopProfiling(title);
+#if (NODE_MODULE_VERSION > 0x0039)
+    profile = data->profiler->StopProfiling(title);
+#elif (NODE_MODULE_VERSION > 0x000B)
+    profile = v8::Isolate::GetCurrent()->GetCpuProfiler()->StopProfiling(title);
 #else
     profile = v8::CpuProfiler::StopProfiling(title);
 #endif
@@ -81,9 +84,7 @@ namespace nodex {
     ProfilerData* data =
       reinterpret_cast<ProfilerData*>(info.Data().As<External>()->Value());
 
-    v8::CpuProfiler* profiler = data->profiler;
-
-    profiler->SetSamplingInterval(Nan::To<uint32_t>(info[0]).ToChecked());
+    data->profiler->SetSamplingInterval(Nan::To<uint32_t>(info[0]).ToChecked());
 #elif (NODE_MODULE_VERSION > 0x000B)
     v8::Isolate::GetCurrent()->GetCpuProfiler()->SetSamplingInterval(Nan::To<uint32_t>(info[0]).ToChecked());
 #endif
