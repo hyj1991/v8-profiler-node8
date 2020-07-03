@@ -12,8 +12,12 @@ namespace nodex {
 
     v8::Local<v8::Context> context;
     v8::CpuProfiler* profiler;
+
     Nan::Persistent<v8::Object> profiles;
     Nan::Persistent<v8::ObjectTemplate> profile_template_;
+
+    Nan::Persistent<v8::Object> snapshots;
+    Nan::Persistent<v8::ObjectTemplate> snapshot_template_;
 
     static void DeleteInstance(void* data);
   };

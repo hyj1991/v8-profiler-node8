@@ -3,8 +3,11 @@
 #include "heap_output_stream.h"
 
 namespace nodex {
+  using Nan::TryCatch;
   using v8::ActivityControl;
   using v8::Array;
+  using v8::Context;
+  using v8::External;
   using v8::Function;
   using v8::HeapSnapshot;
   using v8::Integer;
@@ -12,7 +15,6 @@ namespace nodex {
   using v8::Object;
   using v8::SnapshotObjectId;
   using v8::String;
-  using Nan::TryCatch;
   using v8::Value;
 
   HeapProfiler::HeapProfiler() {}
@@ -47,13 +49,15 @@ namespace nodex {
       Local<Value> abort;
   };
 
-  void HeapProfiler::Initialize (Local<Object> target) {
+  void HeapProfiler::Initialize (Local<Object> target, Local<Context> context, ProfilerData* data) {
     Nan::HandleScope scope;
 
     Local<Object> heapProfiler = Nan::New<Object>();
     Local<Object> snapshots = Nan::New<Object>();
 
-    Nan::SetMethod(heapProfiler, "takeSnapshot", HeapProfiler::TakeSnapshot);
+    Local<External> externalData = Nan::New<External>(data);
+
+    Nan::SetMethod(heapProfiler, "takeSnapshot", HeapProfiler::TakeSnapshot, externalData);
     Nan::SetMethod(heapProfiler, "startTrackingHeapObjects", HeapProfiler::StartTrackingHeapObjects);
     Nan::SetMethod(heapProfiler, "stopTrackingHeapObjects", HeapProfiler::StopTrackingHeapObjects);
     Nan::SetMethod(heapProfiler, "getHeapStats", HeapProfiler::GetHeapStats);
@@ -61,7 +65,7 @@ namespace nodex {
     Nan::SetMethod(heapProfiler, "getHeapObjectId", HeapProfiler::GetHeapObjectId);
     Nan::Set(heapProfiler, Nan::New<String>("snapshots").ToLocalChecked(), snapshots);
 
-    Snapshot::snapshots.Reset(snapshots);
+    data->snapshots.Reset(snapshots);
     Nan::Set(target, Nan::New<String>("heap").ToLocalChecked(), heapProfiler);
   }
 
@@ -83,7 +87,9 @@ namespace nodex {
     const HeapSnapshot* snapshot = v8::HeapProfiler::TakeSnapshot(title, HeapSnapshot::kFull, control);
 #endif
 
-    info.GetReturnValue().Set(Snapshot::New(snapshot));
+    ProfilerData* data =
+      reinterpret_cast<ProfilerData*>(info.Data().As<External>()->Value());
+    info.GetReturnValue().Set(Snapshot::New(data, snapshot));
   }
 
   NAN_METHOD(HeapProfiler::StartTrackingHeapObjects) {

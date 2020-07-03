@@ -1,41 +1,43 @@
 #include "heap_snapshot.h"
 #include "heap_output_stream.h"
 #include "heap_graph_node.h"
+#include "profiler_data.h"
 
 namespace nodex {
-  using v8::Array;  
-  using v8::HeapSnapshot;
-  using v8::HeapGraphNode;
+  using v8::Array;
+  using v8::External;
+  using v8::Function;
+  using v8::FunctionTemplate;
   using v8::HeapGraphEdge;
+  using v8::HeapGraphNode;
+  using v8::HeapSnapshot;
   using v8::Integer;
+  using v8::Isolate;
   using v8::Local;
   using v8::Object;
   using v8::ObjectTemplate;
-  using v8::FunctionTemplate;
   using v8::SnapshotObjectId;
   using v8::String;
-  using v8::Function;
   using v8::Value;
-  using v8::Isolate;
-
-  Nan::Persistent<ObjectTemplate> Snapshot::snapshot_template_;
-  Nan::Persistent<Object> Snapshot::snapshots;
 
   NAN_METHOD(Snapshot_EmptyMethod) {
   }
 
-  void Snapshot::Initialize () {
+  void Snapshot::Initialize (ProfilerData* data) {
     Nan::HandleScope scope;
 
     Local<FunctionTemplate> f = Nan::New<FunctionTemplate>(Snapshot_EmptyMethod);
     Local<ObjectTemplate> o = f->InstanceTemplate();
     o->SetInternalFieldCount(1);
+
+    Local<External> externalData = Nan::New<External>(data);
+
     Nan::SetAccessor(o, Nan::New<String>("root").ToLocalChecked(), Snapshot::GetRoot);
     Nan::SetMethod(o, "getNode", Snapshot::GetNode);
     Nan::SetMethod(o, "getNodeById", Snapshot::GetNodeById);
-    Nan::SetMethod(o, "delete", Snapshot::Delete);
+    Nan::SetMethod(o, "delete", Snapshot::Delete, externalData);
     Nan::SetMethod(o, "serialize", Snapshot::Serialize);
-    snapshot_template_.Reset(o);
+    data->snapshot_template_.Reset(o);
   }
 
   NAN_GETTER(Snapshot::GetRoot) {
@@ -94,7 +96,10 @@ namespace nodex {
   NAN_METHOD(Snapshot::Delete) {
     void* ptr = Nan::GetInternalFieldPointer(info.Holder(), 0);
 
-    Local<Object> snapshots = Nan::New<Object>(Snapshot::snapshots);
+    ProfilerData* data =
+      reinterpret_cast<ProfilerData*>(info.Data().As<External>()->Value());
+
+    Local<Object> snapshots = Nan::New<Object>(data->snapshots);
 
     Local<String> __uid = Nan::New<String>("uid").ToLocalChecked();
     Local<Integer> _uid = Nan::To<Integer>(Nan::Get(info.Holder(), __uid).ToLocalChecked()).ToLocalChecked();
@@ -104,15 +109,15 @@ namespace nodex {
     info.GetReturnValue().Set(snapshots);
   }
 
-  Local<Value> Snapshot::New(const HeapSnapshot* node) {
+  Local<Value> Snapshot::New(ProfilerData* data, const HeapSnapshot* node) {
     Nan::EscapableHandleScope scope;
 
-    if (snapshot_template_.IsEmpty()) {
-      Snapshot::Initialize();
+    if (data->snapshot_template_.IsEmpty()) {
+      Snapshot::Initialize(data);
     }
   Local<Object> snapshot;
 #if (NODE_MODULE_VERSION > 0x0040)
-    snapshot = Nan::New(snapshot_template_)
+    snapshot = Nan::New(data->snapshot_template_)
       ->NewInstance(Nan::GetCurrentContext()).ToLocalChecked();
 #else
     snapshot = Nan::New(snapshot_template_)->NewInstance();
@@ -138,7 +143,7 @@ namespace nodex {
     Nan::Set(snapshot, Nan::New<String>("nodesCount").ToLocalChecked(), nodesCount);
     Nan::Set(snapshot, Nan::New<String>("maxSnapshotJSObjectId").ToLocalChecked(), objectId);
 
-    Local<Object> snapshots = Nan::New<Object>(Snapshot::snapshots);
+    Local<Object> snapshots = Nan::New<Object>(data->snapshots);
     Nan::Set(snapshots, _uid, snapshot);
 
     return scope.Escape(snapshot);

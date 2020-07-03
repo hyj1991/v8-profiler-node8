@@ -7,7 +7,7 @@
 namespace nodex {
   void InitializeProfiler(v8::Local<v8::Object> target, v8::Local<v8::Context> context, ProfilerData* data) {
     Nan::HandleScope scope;
-    HeapProfiler::Initialize(target);
+    HeapProfiler::Initialize(target, context, data);
     CpuProfiler::Initialize(target, context, data);
   }
 
