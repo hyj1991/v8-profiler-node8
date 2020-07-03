@@ -8,9 +8,8 @@ namespace nodex {
 
   class ProfilerData {
    public:
-    ProfilerData(v8::Local<v8::Context> context, v8::Isolate* isolate);
+    explicit ProfilerData(v8::Isolate* isolate);
 
-    v8::Local<v8::Context> context;
     v8::CpuProfiler* profiler;
 
     Nan::Persistent<v8::Object> profiles;
