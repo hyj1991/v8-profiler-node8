@@ -3,21 +3,20 @@
 
 #include "v8-profiler.h"
 #include "nan.h"
+#include "profiler_data.h"
 
 namespace nodex {
 
   class Snapshot {
     public:
-      static v8::Local<v8::Value> New(const v8::HeapSnapshot* node);
-      static Nan::Persistent<v8::Object> snapshots;
+      static v8::Local<v8::Value> New(ProfilerData* data, const v8::HeapSnapshot* node);
     private:
-      static void Initialize();
+      static void Initialize(ProfilerData* data);
       static NAN_GETTER(GetRoot);
       static NAN_METHOD(GetNode);
       static NAN_METHOD(GetNodeById);
       static NAN_METHOD(Delete);
       static NAN_METHOD(Serialize);
-      static Nan::Persistent<v8::ObjectTemplate> snapshot_template_;
   };
 } //namespace nodex
 #endif  // NODE_SNAPSHOT_

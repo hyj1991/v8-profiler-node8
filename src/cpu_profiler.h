@@ -2,13 +2,14 @@
 #define NODE_CPU_PROFILER_
 
 #include "v8-profiler.h"
+#include "profiler_data.h"
 #include "node.h"
 #include "nan.h"
 
 namespace nodex {
   class CpuProfiler {
     public:
-      static void Initialize(v8::Local<v8::Object> target);
+      static void Initialize(v8::Local<v8::Object> target, v8::Local<v8::Context> context, ProfilerData* data);
 
       CpuProfiler();
       virtual ~CpuProfiler();
