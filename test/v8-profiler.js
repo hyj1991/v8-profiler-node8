@@ -6,6 +6,12 @@ const expect = require('chai').expect,
 const NODE_V_010 = /^v0\.10\.\d+$/.test(process.version);
 const SOURCE_PATH = path.join(__dirname, '..');
 
+function escape(str) {
+  return str
+    .replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
+    .replace(/-/g, '\\x2d');
+};
+
 let workerThreads;
 
 try {
@@ -212,7 +218,7 @@ describe('v8-profiler', function() {
       it('supports profiling workers', function(done) {
         const worker = new workerThreads.Worker(`
           const {parentPort} = require('worker_threads');
-          const profiler = require('${SOURCE_PATH.replace('\\', '\\\\')}');
+          const profiler = require('${escape(SOURCE_PATH)}');
 
           profiler.startProfiling('worker');
 
