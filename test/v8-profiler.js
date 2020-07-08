@@ -6,6 +6,10 @@ const expect = require('chai').expect,
 const NODE_V_010 = /^v0\.10\.\d+$/.test(process.version);
 const SOURCE_PATH = path.join(__dirname, '..');
 
+var SegfaultHandler = require('segfault-handler');
+var logPath = path.join(__dirname, 'crash.log');
+SegfaultHandler.registerHandler(logPath);
+
 function escape(str) {
   return str
     .replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
