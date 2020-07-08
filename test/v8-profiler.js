@@ -1,4 +1,5 @@
 "use strict";
+require('segfault-handler').registerHandler('crash.log');
 const expect = require('chai').expect,
       path = require('path'),
       profiler = require('../');
