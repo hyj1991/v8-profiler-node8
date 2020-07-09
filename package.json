@@ -68,5 +68,5 @@
     "dep": "npm run build && npm run test",
     "test": "mocha"
   },
-  "version": "7.0.2"
+  "version": "7.1.0"
 }
