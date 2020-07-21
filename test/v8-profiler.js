@@ -3,6 +3,8 @@ const expect = require('chai').expect,
       path = require('path'),
       profiler = require('../');
 
+require('segfault-handler').registerHandler('crash.log');
+
 const NODE_V_010 = /^v0\.10\.\d+$/.test(process.version);
 const SOURCE_PATH = path.join(__dirname, '..');
 
