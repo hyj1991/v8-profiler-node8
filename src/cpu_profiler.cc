@@ -1,3 +1,4 @@
+#include "stdlib.h"
 #include "cpu_profiler.h"
 #include "cpu_profile.h"
 
@@ -22,7 +23,15 @@ namespace nodex {
 
     Local<External> externalData = Nan::New<External>(data);
 
-#if (NODE_MODULE_VERSION > 0x0039)
+#if (NODE_MODULE_VERSION > 0x0043)
+    v8::CpuProfilingLoggingMode loggingMode = v8::kLazyLogging;
+
+    if (getenv("V8_PROFILER_EAGER_LOGGING")) {
+      loggingMode = v8::kEagerLogging;
+    }
+
+    data->profiler = v8::CpuProfiler::New(context->GetIsolate(), v8::kDebugNaming, loggingMode);
+#elif (NODE_MODULE_VERSION > 0x0039)
     data->profiler = v8::CpuProfiler::New(context->GetIsolate());
 #endif
 
