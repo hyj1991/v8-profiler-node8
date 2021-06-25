@@ -36,7 +36,7 @@ namespace nodex {
 
   NAN_METHOD(Profile::Delete) {
     Local<Object> self = info.This();
-    void* ptr = Nan::GetInternalFieldPointer(self, 0);
+    // void* ptr = Nan::GetInternalFieldPointer(self, 0);
 
     ProfilerData* data =
       reinterpret_cast<ProfilerData*>(info.Data().As<External>()->Value());
@@ -45,7 +45,7 @@ namespace nodex {
     Local<Value> _uid = Nan::Get(info.This(), Nan::New<String>("uid").ToLocalChecked()).ToLocalChecked();
     Local<String> uid = Nan::To<String>(_uid).ToLocalChecked();
     Nan::Delete(profiles, uid);
-    static_cast<CpuProfile*>(ptr)->Delete();
+    // static_cast<CpuProfile*>(ptr)->Delete();
   }
 
   Local<Value> Profile::New (ProfilerData* data, const CpuProfile* node) {

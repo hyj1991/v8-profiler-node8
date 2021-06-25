@@ -7,6 +7,7 @@ namespace nodex {
 
   ProfilerData::ProfilerData(Isolate* isolate) {
 #if (NODE_MODULE_VERSION > 0x3B)
+    isolate_ = isolate;
     node::AddEnvironmentCleanupHook(isolate, DeleteInstance, this);
 #endif
   }
