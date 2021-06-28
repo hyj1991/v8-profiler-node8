@@ -13,6 +13,7 @@ namespace nodex {
     uint32_t samplingInterval = 0;
 
     int m_startedProfilesCount = 0;
+    int m_profilesSinceLastCleanup = 0;
 
     v8::CpuProfiler* profiler = nullptr;
 

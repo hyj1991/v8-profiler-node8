@@ -45,10 +45,11 @@ namespace nodex {
 
     ProfilerData* data =
       reinterpret_cast<ProfilerData*>(info.Data().As<External>()->Value());
-    if (!data->m_startedProfilesCount) {
+    if (!data->profiler) {
       data->profiler = v8::CpuProfiler::New(data->isolate_, v8::kDebugNaming, loggingMode);
     }
     ++data->m_startedProfilesCount;
+    ++data->m_profilesSinceLastCleanup;
     bool recsamples = Nan::To<Boolean>(info[1]).ToLocalChecked()->Value();
     if (data->samplingInterval){
       data->profiler->SetSamplingInterval(data->samplingInterval);
@@ -57,10 +58,11 @@ namespace nodex {
 #elif (NODE_MODULE_VERSION > 0x0039)
     ProfilerData* data =
       reinterpret_cast<ProfilerData*>(info.Data().As<External>()->Value());
-    if (!data->m_startedProfilesCount) {
+    if (!data->profiler) {
       data->profiler = v8::CpuProfiler::New(data->isolate_);
     }
     ++data->m_startedProfilesCount;
+    ++data->m_profilesSinceLastCleanup;
     bool recsamples = Nan::To<Boolean>(info[1]).ToLocalChecked()->Value();
     if (data->samplingInterval){
       data->profiler->SetSamplingInterval(data->samplingInterval);
@@ -103,9 +105,11 @@ namespace nodex {
 #if (NODE_MODULE_VERSION > 0x0039)
   const_cast<CpuProfile*>(profile)->Delete();
   --data->m_startedProfilesCount;
-  if (!data->m_startedProfilesCount) {
+
+  if (!data->m_startedProfilesCount && data->m_profilesSinceLastCleanup > 1000) {
     data->profiler->Dispose();
     data->profiler = nullptr;
+    data->m_profilesSinceLastCleanup = 0;
   }
 #endif
   }
