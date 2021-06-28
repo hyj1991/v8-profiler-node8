@@ -1,6 +1,6 @@
 [![npm version](https://img.shields.io/npm/v/v8-profiler-node8/latest.svg)](https://www.npmjs.com/package/v8-profiler-node8)
-[![linux build status](https://github.com/hyj1991/v8-profiler-node8/workflows/Continuous%20integration/badge.svg?branch=master)](https://github.com/hyj1991/v8-profiler-node8/actions?query=branch%3Amaster)
-[![windows build status](https://ci.appveyor.com/api/projects/status/0l9osc0hq6r5p0bn?svg=true)](https://ci.appveyor.com/project/hyj1991/v8-profiler-node8)
+[![linux build status](https://github.com/hyj1991/v8-profiler-node8/workflows/Continuous%20integration/badge.svg?branch=v7.x-staging)](https://github.com/hyj1991/v8-profiler-node8/actions?query=branch%3Av7.x-staging)
+[![windows build status](https://ci.appveyor.com/api/projects/status/0l9osc0hq6r5p0bn/branch/v7.x-staging?svg=true)](https://ci.appveyor.com/project/hyj1991/v8-profiler-node8)
 [![downloads info](https://img.shields.io/npm/dm/v8-profiler-node8.svg)](https://www.npmjs.com/package/v8-profiler-node8)
 [![license](https://img.shields.io/npm/l/v8-profiler-node8.svg)](LICENSE)
 
