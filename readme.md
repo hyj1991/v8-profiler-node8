@@ -1,5 +1,5 @@
 [![npm version](https://img.shields.io/npm/v/v8-profiler-node8/latest.svg)](https://www.npmjs.com/package/v8-profiler-node8)
-[![linux build status](https://travis-ci.org/hyj1991/v8-profiler-node8.svg?branch=master)](https://travis-ci.org/hyj1991/v8-profiler-node8)
+[![linux build status](https://github.com/hyj1991/v8-profiler-node8/workflows/Continuous%20integration/badge.svg?branch=master)](https://github.com/hyj1991/v8-profiler-node8/actions?query=branch%3Amaster)
 [![windows build status](https://ci.appveyor.com/api/projects/status/0l9osc0hq6r5p0bn?svg=true)](https://ci.appveyor.com/project/hyj1991/v8-profiler-node8)
 [![downloads info](https://img.shields.io/npm/dm/v8-profiler-node8.svg)](https://www.npmjs.com/package/v8-profiler-node8)
 [![license](https://img.shields.io/npm/l/v8-profiler-node8.svg)](LICENSE)
@@ -28,6 +28,8 @@ profiler and integration with [node-inspector](http://github.com/node-inspector)
   * v12.x
   * v13.x
   * v14.x
+  * v15.x
+  * v16.x
 
 ## Installation
 ```sh
