@@ -10,7 +10,11 @@ namespace nodex {
    public:
     explicit ProfilerData(v8::Isolate* isolate);
 
-    v8::CpuProfiler* profiler;
+    uint32_t samplingInterval = 0;
+
+    int m_startedProfilesCount = 0;
+
+    v8::CpuProfiler* profiler = nullptr;
 
     Nan::Persistent<v8::Object> profiles;
     Nan::Persistent<v8::ObjectTemplate> profile_template_;
@@ -19,6 +23,8 @@ namespace nodex {
     Nan::Persistent<v8::ObjectTemplate> snapshot_template_;
 
     static void DeleteInstance(void* data);
+
+    v8::Isolate* isolate_;
   };
 
 } //namespace nodex

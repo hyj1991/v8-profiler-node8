@@ -23,18 +23,6 @@ namespace nodex {
 
     Local<External> externalData = Nan::New<External>(data);
 
-#if (NODE_MODULE_VERSION > 0x0043)
-    v8::CpuProfilingLoggingMode loggingMode = v8::kLazyLogging;
-
-    if (getenv("V8_PROFILER_EAGER_LOGGING")) {
-      loggingMode = v8::kEagerLogging;
-    }
-
-    data->profiler = v8::CpuProfiler::New(context->GetIsolate(), v8::kDebugNaming, loggingMode);
-#elif (NODE_MODULE_VERSION > 0x0039)
-    data->profiler = v8::CpuProfiler::New(context->GetIsolate());
-#endif
-
     Nan::SetMethod(cpuProfiler, "startProfiling", CpuProfiler::StartProfiling, externalData);
     Nan::SetMethod(cpuProfiler, "stopProfiling", CpuProfiler::StopProfiling, externalData);
     Nan::SetMethod(cpuProfiler, "setSamplingInterval", CpuProfiler::SetSamplingInterval, externalData);
@@ -48,11 +36,35 @@ namespace nodex {
   NAN_METHOD(CpuProfiler::StartProfiling) {
     Local<String> title = Nan::To<String>(info[0]).ToLocalChecked();
 
-#if (NODE_MODULE_VERSION > 0x0039)
+#if (NODE_MODULE_VERSION > 0x0043)
+    v8::CpuProfilingLoggingMode loggingMode = v8::kLazyLogging;
+
+    if (getenv("V8_PROFILER_EAGER_LOGGING")) {
+      loggingMode = v8::kEagerLogging;
+    }
+
     ProfilerData* data =
       reinterpret_cast<ProfilerData*>(info.Data().As<External>()->Value());
-
+    if (!data->m_startedProfilesCount) {
+      data->profiler = v8::CpuProfiler::New(data->isolate_, v8::kDebugNaming, loggingMode);
+    }
+    ++data->m_startedProfilesCount;
     bool recsamples = Nan::To<Boolean>(info[1]).ToLocalChecked()->Value();
+    if (data->samplingInterval){
+      data->profiler->SetSamplingInterval(data->samplingInterval);
+    }
+    data->profiler->StartProfiling(title, recsamples);
+#elif (NODE_MODULE_VERSION > 0x0039)
+    ProfilerData* data =
+      reinterpret_cast<ProfilerData*>(info.Data().As<External>()->Value());
+    if (!data->m_startedProfilesCount) {
+      data->profiler = v8::CpuProfiler::New(data->isolate_);
+    }
+    ++data->m_startedProfilesCount;
+    bool recsamples = Nan::To<Boolean>(info[1]).ToLocalChecked()->Value();
+    if (data->samplingInterval){
+      data->profiler->SetSamplingInterval(data->samplingInterval);
+    }
     data->profiler->StartProfiling(title, recsamples);
 #elif (NODE_MODULE_VERSION > 0x000B)
     bool recsamples = Nan::To<Boolean>(info[1]).ToLocalChecked()->Value();
@@ -85,7 +97,17 @@ namespace nodex {
     profile = v8::CpuProfiler::StopProfiling(title);
 #endif
 
-    info.GetReturnValue().Set(Profile::New(data, profile));
+    Local<v8::Value> result = Profile::New(data, profile);
+    info.GetReturnValue().Set(result);
+
+#if (NODE_MODULE_VERSION > 0x0039)
+  const_cast<CpuProfile*>(profile)->Delete();
+  --data->m_startedProfilesCount;
+  if (!data->m_startedProfilesCount) {
+    data->profiler->Dispose();
+    data->profiler = nullptr;
+  }
+#endif
   }
 
   NAN_METHOD(CpuProfiler::SetSamplingInterval) {
@@ -93,7 +115,7 @@ namespace nodex {
     ProfilerData* data =
       reinterpret_cast<ProfilerData*>(info.Data().As<External>()->Value());
 
-    data->profiler->SetSamplingInterval(Nan::To<uint32_t>(info[0]).ToChecked());
+    data->samplingInterval = Nan::To<uint32_t>(info[0]).ToChecked();
 #elif (NODE_MODULE_VERSION > 0x000B)
     v8::Isolate::GetCurrent()->GetCpuProfiler()->SetSamplingInterval(Nan::To<uint32_t>(info[0]).ToChecked());
 #endif
