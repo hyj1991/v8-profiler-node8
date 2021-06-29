@@ -37,16 +37,20 @@ namespace nodex {
     Local<String> title = Nan::To<String>(info[0]).ToLocalChecked();
 
 #if (NODE_MODULE_VERSION > 0x0043)
-    v8::CpuProfilingLoggingMode loggingMode = v8::kLazyLogging;
-
-    if (getenv("V8_PROFILER_EAGER_LOGGING")) {
-      loggingMode = v8::kEagerLogging;
-    }
-
     ProfilerData* data =
       reinterpret_cast<ProfilerData*>(info.Data().As<External>()->Value());
     if (!data->profiler) {
+#if (NODE_MAJOR_VERSION >= 12 && NODE_MINOR_VERSION >= 16)
+      v8::CpuProfilingLoggingMode loggingMode = v8::kLazyLogging;
+
+      if (getenv("V8_PROFILER_EAGER_LOGGING")) {
+        loggingMode = v8::kEagerLogging;
+      }
+
       data->profiler = v8::CpuProfiler::New(data->isolate_, v8::kDebugNaming, loggingMode);
+#else
+      data->profiler = v8::CpuProfiler::New(data->isolate_);
+#endif
     }
     ++data->m_startedProfilesCount;
     ++data->m_profilesSinceLastCleanup;
