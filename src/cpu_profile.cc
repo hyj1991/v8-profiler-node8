@@ -35,7 +35,7 @@ namespace nodex {
   }
 
   NAN_METHOD(Profile::Delete) {
-    Local<Object> self = info.This();
+    // Local<Object> self = info.This();
     // void* ptr = Nan::GetInternalFieldPointer(self, 0);
 
     ProfilerData* data =

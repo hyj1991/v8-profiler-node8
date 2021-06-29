@@ -9,6 +9,8 @@ namespace nodex {
 #if (NODE_MODULE_VERSION > 0x3B)
     isolate_ = isolate;
     node::AddEnvironmentCleanupHook(isolate, DeleteInstance, this);
+#elif (NODE_MODULE_VERSION > 0x0039)
+    isolate_ = isolate;
 #endif
   }
 
