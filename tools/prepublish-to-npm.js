@@ -2,7 +2,7 @@
 
 const co = require('co');
 const rimraf = require('rimraf');
-const gyp = require('node-pre-gyp');
+const gyp = require('@mapbox/node-pre-gyp');
 const versions = ['0.10.0', '0.12.0', '4.0.0', '5.0.0', '6.0.0'];
 const matrix = {
   x64: ['win32', 'linux', 'darwin'],

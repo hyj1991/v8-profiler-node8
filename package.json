@@ -28,9 +28,9 @@
     }
   ],
   "dependencies": {
+    "@mapbox/node-pre-gyp": "^1.0.5",
     "nan": "^2.14.1",
-    "node-gyp": "^3.8.0",
-    "node-pre-gyp": "^0.15.0"
+    "node-gyp": "^3.8.0"
   },
   "deprecated": false,
   "description": "based on v8-profiler@5.7.0, solved the v8-profiler segment fault error in node 8.x+",

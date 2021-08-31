@@ -2,7 +2,7 @@
 
 const path = require('path');
 const fs = require('fs');
-const versioning = require('node-pre-gyp/lib/util/versioning.js');
+const versioning = require('@mapbox/node-pre-gyp/lib/util/versioning.js');
 const packagePath = versioning.evaluate(require('../package.json')).staged_tarball;
 
 function copy() {
