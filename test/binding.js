@@ -1,5 +1,5 @@
 const expect  = require('chai').expect,
-      binary = require('node-pre-gyp'),
+      binary = require('@mapbox/node-pre-gyp'),
       path = require('path'),
       binding_path = binary.find(path.resolve(path.join(__dirname,'../package.json'))),
       binding = require(binding_path);
