@@ -30,7 +30,7 @@
   "dependencies": {
     "@mapbox/node-pre-gyp": "^1.0.5",
     "nan": "^2.14.1",
-    "node-gyp": "^3.8.0"
+    "node-gyp": "^8.2.0"
   },
   "deprecated": false,
   "description": "based on v8-profiler@5.7.0, solved the v8-profiler segment fault error in node 8.x+",
@@ -64,7 +64,11 @@
     "pack-7u": "node scripts/7u.js",
     "copy": "node scripts/copy.js",
     "build": "node ./scripts/node-pre-gyp rebuild",
+    "build-x64": "npm run build",
+    "build-x86": "node ./scripts/node-pre-gyp rebuild --target_arch=ia32",
     "pack": "node-pre-gyp package && node-pre-gyp testpackage",
+    "pack-x86": "node-pre-gyp package --target_arch=ia32 && node-pre-gyp testpackage --target_arch=ia32",
+    "pack-x64": "npm run pack",
     "dep": "npm run build && npm run test",
     "test": "mocha"
   },
