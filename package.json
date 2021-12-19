@@ -70,7 +70,9 @@
     "pack-x86": "node-pre-gyp package --target_arch=ia32 && node-pre-gyp testpackage --target_arch=ia32",
     "pack-x64": "npm run pack",
     "dep": "npm run build && npm run test",
-    "test": "mocha"
+    "test": "mocha -t 0",
+    "pack-actions-x86": "node scripts/clean.js && npm run pack-x86  && npm run copy -- --target_arch=ia32",
+    "pack-actions-x64": "node scripts/clean.js && npm run pack-x64  && npm run copy"
   },
-  "version": "6.3.0"
+  "version": "6.3.1"
 }
