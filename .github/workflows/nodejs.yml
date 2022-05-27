@@ -18,17 +18,18 @@ jobs:
           {os: "windows-latest", arch: "x86"},
           {os: "windows-latest", arch: "x64"},
           {os: "macos-latest", arch: "x64"},
+          {os: "macos-latest", arch: "arm64"},
           {os: "ubuntu-latest", arch: "x64"},
+          {os: "ubuntu-latest", arch: "arm64"},
         ]
-        node-version: [ 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 ]
+        node-version: [ 12, 14, 16, 18 ]
 
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
 
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.1
@@ -37,11 +38,8 @@ jobs:
     - name: Install Dependencies
       run: npm i
 
-    - name: Build C++
-      run: npm run build
-
     - name: Continuous integration
-      run: npm run test || (sleep 5 && npm run test) || (sleep 5 && npm run test)
+      run: npm run test
 
     # - name: Build Binary
     #   run: npm run build-${{ matrix.ci-type.arch }}

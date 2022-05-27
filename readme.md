@@ -11,9 +11,9 @@ profiler and integration with [node-inspector](http://github.com/node-inspector)
 
 # Compatibility
 * **Platform**
-  * mac
-  * linux
-  * windows
+  * mac (x64 / arm64)
+  * linux (x64 / arm64)
+  * windows (x64)
 
 * **Node version**
   * v4.x
@@ -30,6 +30,7 @@ profiler and integration with [node-inspector](http://github.com/node-inspector)
   * v15.x
   * v16.x
   * v17.x
+  * v18.x
 
 ## Installation
 ```sh
