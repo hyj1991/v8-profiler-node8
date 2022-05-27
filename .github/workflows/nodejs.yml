@@ -20,7 +20,7 @@ jobs:
           {os: "macos-latest", arch: "x64"},
           {os: "ubuntu-latest", arch: "x64"},
         ]
-        node-version: [ 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 ]
+        node-version: [ 8, 10, 12, 14, 16, 18 ]
 
     steps:
     - uses: actions/checkout@v2
@@ -37,11 +37,8 @@ jobs:
     - name: Install Dependencies
       run: npm i
 
-    - name: Build C++
-      run: npm run build
-
     - name: Continuous integration
-      run: npm run test || (sleep 5 && npm run test) || (sleep 5 && npm run test)
+      run: npm run test
 
     # - name: Build Binary
     #   run: npm run build-${{ matrix.ci-type.arch }}

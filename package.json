@@ -1,19 +1,14 @@
 {
+  "name": "v8-profiler-node8",
+  "main": "v8-profiler",
   "author": {
-    "name": "Danny Coates",
-    "email": "dannycoates@gmail.com"
-  },
-  "binary": {
-    "module_name": "profiler",
-    "module_path": "./build/binding/{configuration}/{node_abi}-{platform}-{arch}/",
-    "remote_path": "./v{version}/",
-    "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
-    "host": "https://github.com/hyj1991/v8-profiler-node8/releases/download"
+    "name": "hyj1991",
+    "email": "yeekwanvong@gmail.com"
   },
   "bugs": {
     "url": "https://github.com/hyj1991/v8-profiler-node8/issues"
   },
-  "bundleDependencies": false,
+  "description": "based on v8-profiler@5.7.0, solved the v8-profiler segment fault error in node 8.x+",
   "contributors": [
     {
       "name": "Miroslav Bajtoš"
@@ -28,17 +23,11 @@
     }
   ],
   "dependencies": {
-    "nan": "^2.14.1",
-    "node-gyp": "^8.2.0",
-    "node-pre-gyp": "^0.15.0"
+    "v8-profiler-next": "^1.7.1"
   },
-  "deprecated": false,
-  "description": "based on v8-profiler@5.7.0, solved the v8-profiler segment fault error in node 8.x+",
   "devDependencies": {
-    "chai": "^4.2.0",
-    "co": "^4.6.0",
-    "mocha": "^5.2.0",
-    "rimraf": "^2.6.3"
+    "chai": "^4.3.6",
+    "mocha": "^5.2.0"
   },
   "engines": {
     "node": ">=0.10"
@@ -49,30 +38,12 @@
     "inspector"
   ],
   "license": "BSD-2-Clause",
-  "main": "v8-profiler",
-  "name": "v8-profiler-node8",
   "repository": {
     "type": "git",
     "url": "git://github.com/hyj1991/v8-profiler-node8.git"
   },
   "scripts": {
-    "install": "node-pre-gyp install --fallback-to-build",
-    "preinstall": "node -e 'process.exit(0)'",
-    "package": "node scripts/build.js",
-    "pack-common": "node scripts/common.js",
-    "pack-6u": "node scripts/6u.js",
-    "pack-7u": "node scripts/7u.js",
-    "copy": "node scripts/copy.js",
-    "build": "node-pre-gyp rebuild",
-    "build-x64": "npm run build",
-    "build-x86": "node-pre-gyp rebuild --target_arch=ia32",
-    "pack": "node-pre-gyp package && node-pre-gyp testpackage",
-    "pack-x86": "node-pre-gyp package --target_arch=ia32 && node-pre-gyp testpackage --target_arch=ia32",
-    "pack-x64": "npm run pack",
-    "dep": "npm run build && npm run test",
-    "test": "mocha -t 0",
-    "pack-actions-x86": "node scripts/clean.js && npm run pack-x86  && npm run copy -- --target_arch=ia32",
-    "pack-actions-x64": "node scripts/clean.js && npm run pack-x64  && npm run copy"
+    "test": "mocha -t 0"
   },
   "version": "6.3.1"
 }
