@@ -1,6 +1,7 @@
 {
   "name": "v8-profiler-node8",
   "main": "v8-profiler",
+  "version": "6.4.0-pre",
   "author": {
     "name": "hyj1991",
     "email": "yeekwanvong@gmail.com"
@@ -44,6 +45,5 @@
   },
   "scripts": {
     "test": "mocha -t 0"
-  },
-  "version": "6.3.1"
+  }
 }
