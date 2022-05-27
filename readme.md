@@ -46,8 +46,10 @@ var profiler = require('v8-profiler-node8');
 `deleteAllSnapshots()` - works as described in name.
 
 ```js
+const profiler = require('v8-profiler-node8')
 var snapshot1 = profiler.takeSnapshot('1');
-var snapshot2 = profiler.takeSnapshot();
+var snapshot2 = profiler.takeSnapshot()
+console.log(profiler.snapshots);
 profiler.deleteAllSnapshots();
 ```
 
@@ -62,9 +64,11 @@ profiler.deleteAllSnapshots();
 `collectSample()` - causes all active profiles to synchronously record the current callstack. Does not add a new top level sample, only adds more detail to the call graph.
 
 ```js
+const profiler = require('v8-profiler-node8')
 profiler.startProfiling('', true);
 setTimeout(function() {
   var profile = profiler.stopProfiling('');
+  console.log(profile)
   profiler.deleteAllProfiles();
 }, 1000);
 ```
@@ -101,7 +105,7 @@ snapshot1.export(function(error, result) {
 // Export snapshot to file stream
 snapshot2.export()
   .pipe(fs.createWriteStream('snapshot2.json'))
-  .on('finish', snapshot2.delete);
+  .on('finish', snapshot2.delete.bind(snapshot2));
 ```
 
 ## CPU Profile API
@@ -119,7 +123,7 @@ var profile1 = profiler.stopProfiling();
 profiler.startProfiling('2', true);
 var profile2 = profiler.stopProfiling();
 
-console.log(snapshot1.getHeader(), snapshot2.getHeader());
+console.log(profile1.getHeader(), profile2.getHeader());
 
 profile1.export(function(error, result) {
   fs.writeFileSync('profile1.json', result);
