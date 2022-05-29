@@ -1,7 +1,24 @@
-const expect  = require('chai').expect,
+"use strict";
+const expect = require('chai').expect,
+      path = require('path'),
       profiler = require('../');
 
 const NODE_V_010 = /^v0\.10\.\d+$/.test(process.version);
+const SOURCE_PATH = path.join(__dirname, '..');
+
+function escape(str) {
+  return str
+    .replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
+    .replace(/-/g, '\\x2d');
+};
+
+let workerThreads;
+
+try {
+  workerThreads = require('worker_threads');
+} catch (e) {
+  // worker threads are not supported
+}
 
 describe('v8-profiler', function() {
   describe('CPU', function() {
@@ -195,4 +212,39 @@ describe('v8-profiler', function() {
       });
     }
   });
+
+  if (workerThreads) {
+    describe('worker_threads compatibility', function() {
+      it('supports profiling workers', function(done) {
+        const worker = new workerThreads.Worker(`
+          const {parentPort} = require('worker_threads');
+          const profiler = require('${escape(SOURCE_PATH)}');
+          profiler.startProfiling('worker');
+          let a = 1;
+          for (let i = 0; i<1e6; i++) { a += a };
+          const profile = profiler.stopProfiling('worker');
+          parentPort.postMessage(JSON.stringify(profile));
+        `, {eval: true});
+
+        worker.on('message', function (serializedProfile) {
+          const profile = JSON.parse(serializedProfile);
+
+          expect(Object.keys(profile).sort()).to.deep.eq([
+            "typeId",
+            "uid",
+            "title",
+            "head",
+            "startTime",
+            "endTime",
+            "samples",
+            "timestamps"
+          ].sort());
+
+          done();
+        });
+
+        worker.on('error', done)
+      });
+    });
+  }
 });
