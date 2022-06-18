@@ -1,6 +1,5 @@
 [![npm version](https://img.shields.io/npm/v/v8-profiler-node8/latest.svg)](https://www.npmjs.com/package/v8-profiler-node8)
-[![linux build status](https://github.com/hyj1991/v8-profiler-node8/workflows/Continuous%20integration/badge.svg?branch=v7.x-staging)](https://github.com/hyj1991/v8-profiler-node8/actions?query=branch%3Av7.x-staging)
-[![windows build status](https://ci.appveyor.com/api/projects/status/0l9osc0hq6r5p0bn/branch/v7.x-staging?svg=true)](https://ci.appveyor.com/project/hyj1991/v8-profiler-node8)
+[![Continuous integration](https://github.com/hyj1991/v8-profiler-node8/actions/workflows/nodejs.yml/badge.svg?branch=master)](https://github.com/hyj1991/v8-profiler-node8/actions/workflows/nodejs.yml?query=branch:master)
 [![downloads info](https://img.shields.io/npm/dm/v8-profiler-node8.svg)](https://www.npmjs.com/package/v8-profiler-node8)
 [![license](https://img.shields.io/npm/l/v8-profiler-node8.svg)](LICENSE)
 
@@ -12,9 +11,9 @@ profiler and integration with [node-inspector](http://github.com/node-inspector)
 
 # Compatibility
 * **Platform**
-  * mac
-  * linux
-  * windows
+  * mac (x64 / arm64)
+  * linux (x64 / arm64)
+  * windows (x64)
 
 * **Node version**
   * v4.x
@@ -30,6 +29,8 @@ profiler and integration with [node-inspector](http://github.com/node-inspector)
   * v14.x
   * v15.x
   * v16.x
+  * v17.x
+  * v18.x
 
 ## Installation
 ```sh
@@ -45,8 +46,10 @@ var profiler = require('v8-profiler-node8');
 `deleteAllSnapshots()` - works as described in name.
 
 ```js
+const profiler = require('v8-profiler-node8')
 var snapshot1 = profiler.takeSnapshot('1');
-var snapshot2 = profiler.takeSnapshot();
+var snapshot2 = profiler.takeSnapshot()
+console.log(profiler.snapshots);
 profiler.deleteAllSnapshots();
 ```
 
@@ -61,9 +64,11 @@ profiler.deleteAllSnapshots();
 `collectSample()` - causes all active profiles to synchronously record the current callstack. Does not add a new top level sample, only adds more detail to the call graph.
 
 ```js
+const profiler = require('v8-profiler-node8')
 profiler.startProfiling('', true);
 setTimeout(function() {
   var profile = profiler.stopProfiling('');
+  console.log(profile)
   profiler.deleteAllProfiles();
 }, 1000);
 ```
@@ -100,7 +105,7 @@ snapshot1.export(function(error, result) {
 // Export snapshot to file stream
 snapshot2.export()
   .pipe(fs.createWriteStream('snapshot2.json'))
-  .on('finish', snapshot2.delete);
+  .on('finish', snapshot2.delete.bind(snapshot2));
 ```
 
 ## CPU Profile API
@@ -118,7 +123,7 @@ var profile1 = profiler.stopProfiling();
 profiler.startProfiling('2', true);
 var profile2 = profiler.stopProfiling();
 
-console.log(snapshot1.getHeader(), snapshot2.getHeader());
+console.log(profile1.getHeader(), profile2.getHeader());
 
 profile1.export(function(error, result) {
   fs.writeFileSync('profile1.json', result);

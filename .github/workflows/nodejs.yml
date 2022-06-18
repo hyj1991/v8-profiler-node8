@@ -3,37 +3,54 @@ name: Continuous integration
 on:
   push:
     branches: [ '**' ]
+    tags: v*.*.*
   pull_request:
     branches: [ '**' ]
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.ci-type.os }}
 
     strategy:
-      max-parallel: 2
-
+      fail-fast: false
       matrix:
-        os: [ windows-latest, ubuntu-latest, macos-latest ]
-        node-version: [ 8.x, 9.x, 10.x, 11.x, 12.x, 13.x, 14.x, 15.x, 16.x ]
+        ci-type: [
+          {os: "windows-latest", arch: "x86"},
+          {os: "windows-latest", arch: "x64"},
+          {os: "macos-latest", arch: "x64"},
+          {os: "macos-latest", arch: "arm64"},
+          {os: "ubuntu-latest", arch: "x64"},
+          {os: "ubuntu-latest", arch: "arm64"},
+        ]
+        node-version: [ 12, 14, 16, 18 ]
 
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
 
     - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.3
-      if: ${{ matrix.os == 'windows-latest' }}
+      uses: microsoft/setup-msbuild@v1.1
+      if: ${{ matrix.ci-type.os == 'windows-latest' }}
 
     - name: Install Dependencies
       run: npm i
 
-    - name: Build C++
-      run: npm run build
-
     - name: Continuous integration
       run: npm run test
+
+    # - name: Build Binary
+    #   run: npm run build-${{ matrix.ci-type.arch }}
+
+    # - name: Package Binary
+    #   run: npm run pack-actions-${{ matrix.ci-type.arch }}
+
+    # - name: Drat Release
+    #   uses: softprops/action-gh-release@v1
+    #   if: startsWith(github.ref, 'refs/tags/')
+    #   with:
+    #     files: release/**
+    #     fail_on_unmatched_files: true
+    #     draft: true

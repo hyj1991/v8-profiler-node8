@@ -219,14 +219,10 @@ describe('v8-profiler', function() {
         const worker = new workerThreads.Worker(`
           const {parentPort} = require('worker_threads');
           const profiler = require('${escape(SOURCE_PATH)}');
-
           profiler.startProfiling('worker');
-
           let a = 1;
           for (let i = 0; i<1e6; i++) { a += a };
-
           const profile = profiler.stopProfiling('worker');
-
           parentPort.postMessage(JSON.stringify(profile));
         `, {eval: true});
 
